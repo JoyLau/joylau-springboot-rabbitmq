@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  * 2587038142@qq.com
  */
 @Component
-@RabbitListener(queues = "hello")
+@RabbitListener(queues = "meteo-equip-queue")
 public class Consumer {
     @RabbitHandler
     public void process(String hello) {

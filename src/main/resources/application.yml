@@ -1,9 +1,9 @@
 spring:
   rabbitmq:
-    host: localhost
+    host: 192.168.10.139
     port: 5672
-    username: guest
-    password: guest
+    username: admin
+    password: public123
   output:
     ansi:
       enabled: always

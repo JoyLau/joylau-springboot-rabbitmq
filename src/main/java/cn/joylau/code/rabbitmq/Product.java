@@ -1,11 +1,9 @@
 package cn.joylau.code.rabbitmq;
 
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.amqp.core.AmqpTemplate;
-import org.springframework.amqp.core.Queue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.Date;
 
 /**
  * Created by JoyLau on 2017/6/16.
@@ -18,10 +16,23 @@ public class Product {
     private AmqpTemplate rabbitTemplate;
 
     public void send() {
-        String context = "hello " + new Date();
-        System.out.println("生产者发送信息 : " + context);
+        MeteoEquip meteoEquip = new MeteoEquip();
 
-        new Queue("hello");
-        this.rabbitTemplate.convertAndSend("hello", context);
+        meteoEquip.setDeviceNum("#003");
+        meteoEquip.setDeviceTime("20170627103816");
+        meteoEquip.setVis10("30000");
+        meteoEquip.setRc("0");
+        meteoEquip.setRt("30.2");
+        meteoEquip.setWh("10.2");
+
+        JSONObject object = new JSONObject();
+
+        object.put("success",true);
+        object.put("data",meteoEquip);
+
+
+        String context = object.toJSONString();
+
+        this.rabbitTemplate.convertAndSend("meteo-equip-queue", context);
     }
 }
